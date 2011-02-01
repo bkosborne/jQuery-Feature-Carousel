@@ -123,7 +123,7 @@
         pluginData.containerHeight = pluginData.featuresContainer.height();
 
         // Grab the first image for reference
-        var $firstFeatureImage = $(pluginData.containerIDTag).find("div img:first");
+        var $firstFeatureImage = $(pluginData.containerIDTag).find(".carousel-image:first");
 
         // Large Feature Width
         if (options.largeFeatureWidth > 1)
@@ -166,21 +166,21 @@
         }
 
         // fill in the features array
-        pluginData.featuresContainer.children("div").each(function (index) {
+        pluginData.featuresContainer.find(".carousel-feature").each(function (index) {
           if (index < pluginData.totalFeatureCount) {
             pluginData.featuresArray[index] = $(this);
           }
         });
 
         // Determine the total border width around the feature if there is one
-        if (pluginData.featuresContainer.children("div").first().css("borderLeftWidth") != "medium") {
-          pluginData.borderWidth = parseInt(pluginData.featuresContainer.children("div").first().css("borderLeftWidth"))*2;
+        if (pluginData.featuresContainer.find(".carousel-feature").first().css("borderLeftWidth") != "medium") {
+          pluginData.borderWidth = parseInt(pluginData.featuresContainer.find(".carousel-feature").first().css("borderLeftWidth"))*2;
         }
 
         // Place all the features in a center hidden position to start off
         pluginData.featuresContainer
           // Have to make the container relative positioning
-          .children("div").each(function () {
+          .find(".carousel-feature").each(function () {
             // Center all the features in the middle and hide them
             $(this).css({
               'left': (pluginData.containerWidth / 2) - (pluginData.smallFeatureWidth / 2) - (pluginData.borderWidth / 2),
@@ -191,7 +191,7 @@
             });
           })
           // Set all the images to small feature size
-          .find("img:first").css({
+          .find(".carousel-image").css({
             'width': pluginData.smallFeatureWidth
           });
 
@@ -203,7 +203,7 @@
         }
 
         // Hide story info and set the proper positioning
-        pluginData.featuresContainer.find("div > div")
+        pluginData.featuresContainer.find(".carousel-caption")
           .hide();
       }
 
@@ -250,7 +250,7 @@
             var $numberTag = $("<span></span>");
             $numberTag.addClass("numberTag");
             $numberTag.html("("+ pos + " of " + pluginData.totalFeatureCount + ") ");
-            $(this).find('div p').prepend($numberTag);
+            $(this).find('.carousel-caption p').prepend($numberTag);
           });
         }
       }
@@ -387,7 +387,7 @@
         // NO LONGER going to be in the center
         if (newPosition != 1) {
           // Slide up the story information
-          $feature.find("div")
+          $feature.find(".carousel-caption")
             .hide();
         }
 
@@ -407,7 +407,7 @@
               // Take feature info out of hiding if new position is center
               if (newPosition == 1) {
                 // fade in the feature information
-                $feature.find("div")
+                $feature.find(".carousel-caption")
                   .fadeTo("fast",0.85);
               }
               // decrement the animation queue
@@ -418,7 +418,7 @@
               if (options.counterStyle == 1 || options.counterStyle == 2) {
                 if (newPosition == 1) {
                   // figure out what item was just in the center, and what item is now in the center
-                  var newCenterItemNum = pluginData.featuresContainer.children("div").index($feature) + 1;
+                  var newCenterItemNum = pluginData.featuresContainer.find(".carousel-feature").index($feature) + 1;
                   var oldCenterItemNum;
                   if (direction == false)
                     oldCenterItemNum = getNextNum(newCenterItemNum);
@@ -550,7 +550,7 @@
       });
 
       // These are the click and hover events for the features
-      pluginData.featuresContainer.children("div")
+      pluginData.featuresContainer.find("carousel-feature")
         .click(function () {
           var position = $(this).data('position');
           if (position == 2) {
@@ -607,7 +607,7 @@
         // grab the position # that was clicked
         var goTo = $(this).attr("id").substring(5);
         // find out where that feature # actually is in the carousel right now
-        var whereIsIt = pluginData.featuresContainer.children("div").eq(goTo-1).data('position');
+        var whereIsIt = pluginData.featuresContainer.find(".carousel-feature").eq(goTo-1).data('position');
         // which feature # is currently in the center
         var currentlyAt = pluginData.currentCenterNum;
         // if the blip was clicked for the current center feature, do nothing

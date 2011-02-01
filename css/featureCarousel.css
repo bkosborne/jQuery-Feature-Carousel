@@ -1,7 +1,7 @@
 /********************
  * FEATURE CAROUSEL *
  ********************/
-#featureCarousel {
+#carousel {
   height: 280px;
   width:960px;
   background-color:#CCC;
@@ -10,31 +10,31 @@
   font-size:12px;
   font-family: Arial;
 }
-#featureCarousel img {
+#carousel .carousel-image {
   border:0;
 }
-#featureCarousel .feature {
+#carousel .carousel-feature {
   position:absolute;
   top:-1000px;
   left:-1000px;
   border:3px solid white;
   cursor:pointer;
 }
-#featureCarousel .feature > div {
+#carousel .carousel-feature .carousel-caption {
   position:absolute;
   bottom:0px;
   left:0px;
   background-color:black;
   width:100%;
 }
-#featureCarousel .feature > div p {
+#carousel .carousel-feature .carousel-caption p {
   margin:0;
   padding:5px;
   font-weight:bold;
   font-size:12px;
   color:white;
 }
-#featureCarousel .blipsContainer {
+#carousel .blipsContainer {
   position:absolute;
   color:white;
   right:25px;
@@ -42,10 +42,10 @@
   padding:0;
   margin:0;
 }
-#featureCarousel .blipsContainer li {
+#carousel .blipsContainer li {
   list-style:none;
 }
-#featureCarousel .blipsContainer .blip {
+#carousel .blipsContainer .blip {
   margin:3px;
   padding:0 3px;
   color:white;
@@ -53,7 +53,7 @@
   background-color:#DDD;
   
 }
-#featureCarousel .blipsContainer .blipSelected {
+#carousel .blipsContainer .blipSelected {
   color:white;
   font-weight:bold;
   background-color:black;
