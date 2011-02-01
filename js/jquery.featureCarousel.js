@@ -21,21 +21,21 @@
        * so most customization can be achieved by modifying the options values */
       var pluginData = {
         currentCenterNum:     options.startingFeature,
-        containerWidth:     0,
-        containerHeight:    0,
+        containerWidth:       0,
+        containerHeight:      0,
         largeFeatureWidth:    0,
         largeFeatureHeight:   0,
         smallFeatureWidth:    0,
         smallFeatureHeight:   0,
         totalFeatureCount:    $(this).children("div").length,
-        currentlyMoving:    false,
+        currentlyMoving:      false,
         featuresContainer:    $(this),
-        featuresArray:      [],
-        containerIDTag:     "#"+$(this).attr("id"),
-        timeoutVar:       null,
+        featuresArray:        [],
+        containerIDTag:       "#"+$(this).attr("id"),
+        timeoutVar:           null,
         rotationsRemaining:   0,
-        itemsToAnimate:     0,
-        borderWidth:			0
+        itemsToAnimate:       0,
+        borderWidth:			    0
       };
 
       preload(function () {
@@ -635,28 +635,28 @@
     smallFeatureWidth:    .5,
     smallFeatureHeight:		.5,
     // how much to pad the top of the carousel
-    topPadding:       20,
+    topPadding:           20,
     // spacing between the sides of the container (pixels)
-    sidePadding:      30,
+    sidePadding:          30,
     // the additional offset to pad the side features from the top of the carousel
     smallFeatureOffset:		50,
     // indicates which feature to start the carousel at
-    startingFeature:    1,
+    startingFeature:      1,
     // speed in milliseconds it takes to rotate the carousel
-    carouselSpeed:      1000,
+    carouselSpeed:        1000,
     // time in milliseconds to set interval to autorotate the carousel
     // set to zero to disable it, negative to go left
-    autoPlay:         0,
+    autoPlay:             0,
     // set to true to enable the creation of blips to indicate how many
     // features there are
-    counterStyle:       1,
+    counterStyle:         1,
     // true to preload all images in the carousel before displaying anything
-    preload:        true,
+    preload:              true,
     // Will only display this many features in the carousel
     // set to zero to disable
-    displayCutoff:      0,
+    displayCutoff:        0,
     // an easing can be specified for the animation of the carousel
-    animationEasing:    'swing'
+    animationEasing:      'swing'
   };
 
 })(jQuery);
