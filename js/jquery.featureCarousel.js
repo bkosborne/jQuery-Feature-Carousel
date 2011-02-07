@@ -1,9 +1,10 @@
 /*!
- * Feature Carousel, Version 1.0
+ * Feature Carousel, Version 1.1
  * http://www.bkosolutions.com
  *
  * Copyright 2010 Brian Osborne
  * Licensed under GPL version 3
+ * brian@bkosborne.com
  *
  * http://www.gnu.org/licenses/gpl.txt
  */
@@ -322,6 +323,7 @@
         }
       }
 
+
       // This is a helper function for the animateFeature function that
       // will update the positions of all the features based on the direction
       function rotatePositions(direction) {
@@ -437,8 +439,8 @@
                 if (pluginData.rotationsRemaining > 0)
                   move(direction);
               }
-
-              // call autoplay again
+              
+              // reset timer and autoplay again
               autoPlay();
             }
           )
@@ -642,11 +644,13 @@
     carouselSpeed:        1000,
     // time in milliseconds to set interval to autorotate the carousel
     // set to zero to disable it, negative to go left
-    autoPlay:             0,
+    autoPlay:             4000,
     // accepts 'blips' to generate and display numbered blips indicating what feature is centered
     // or set to 'caption' to prepend the feature number to the caption (requires a 'p' element in the caption)
+    // set to anything else for neither
     counterStyle:         'blips',
-    // true to preload all images in the carousel before displaying anything
+    // true to preload all images in the carousel before displaying anything. If this is set to false,
+    // you will probably need to set a fixed width/height to prevent strangeness
     preload:              true,
     // Will only display this many features in the carousel
     // set to zero to disable
