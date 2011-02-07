@@ -1,8 +1,12 @@
 /********************
  * FEATURE CAROUSEL *
  ********************/
+#carousel-container {
+  position:relative;
+  width:960px;
+}
 #carousel {
-  height: 280px;
+  height:280px;
   width:960px;
   background-color:#CCC;
   position:relative;
@@ -17,7 +21,7 @@
   position:absolute;
   top:-1000px;
   left:-1000px;
-  border:3px solid white;
+  border:2px solid #5d5d5d;
   cursor:pointer;
 }
 #carousel .carousel-feature .carousel-caption {
@@ -46,15 +50,26 @@
   list-style:none;
 }
 #carousel .blipsContainer .blip {
-  margin:3px;
+  margin:0 3px;
   padding:0 3px;
   color:white;
   text-align:center;
   background-color:#DDD;
-  
 }
 #carousel .blipsContainer .blipSelected {
   color:white;
   font-weight:bold;
   background-color:black;
+}
+#carousel-left {
+  position:absolute;
+  bottom:33px;
+  left:220px;
+  cursor:pointer;
+}
+#carousel-right {
+  position:absolute;
+  bottom:33px;
+  right:220px;
+  cursor:pointer;
 }

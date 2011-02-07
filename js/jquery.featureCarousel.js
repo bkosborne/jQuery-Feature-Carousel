@@ -244,7 +244,7 @@
         });
 
         // if the counter style is for including number tags in description...
-        if (options.counterStyle == 3) {
+        if (options.counterStyle == 'caption') {
           $.each(pluginData.featuresArray, function () {
             var pos = getPreviousNum($(this).data('position'));
             var $numberTag = $("<span></span>");
@@ -262,17 +262,13 @@
       function setupBlips()
       {
         // Only setup the blips if the counter style is 1 or 2
-        if (options.counterStyle == 1 || options.counterStyle == 2) {
+        if (options.counterStyle == 'blips') {
           // construct the blip list
           var $list = $("<ul></ul>");
           $list.addClass("blipsContainer");
           for (var i = 0; i < pluginData.totalFeatureCount; i++) {
             // Counter style 1 has no numbers, while 2 does
-            var counter;
-            if (options.counterStyle == 2)
-              counter = "";
-            else
-              counter = i+1;
+            var counter = i+1;
 
             // Build the DOM for the blip list
             var $blip = $("<div>"+counter+"</div>");
@@ -415,7 +411,7 @@
               // have to change the z-index after the animation is done
               $feature.css("z-index", new_zindex);
               // change blips if using them
-              if (options.counterStyle == 1 || options.counterStyle == 2) {
+              if (options.counterStyle == 'blips') {
                 if (newPosition == 1) {
                   // figure out what item was just in the center, and what item is now in the center
                   var newCenterItemNum = pluginData.featuresContainer.find(".carousel-feature").index($feature) + 1;
@@ -540,17 +536,17 @@
       }
 
       // Move to the left if left button clicked
-      $(".leftButton").click(function () {
+      $(options.leftButtonTag).live('click',function () {
         initiateMove(false,1);
       });
 
       // Move to right if right button clicked
-      $(".rightButton").click(function () {
+      $(options.rightButtonTag).live('click',function () {
         initiateMove(true,1);
       });
 
       // These are the click and hover events for the features
-      pluginData.featuresContainer.find("carousel-feature")
+      pluginData.featuresContainer.find(".carousel-feature")
         .click(function () {
           var position = $(this).data('position');
           if (position == 2) {
@@ -625,19 +621,19 @@
       });
     });
   };
-
+  
   $.fn.featureCarousel.defaults = {
     // If zero, take original width and height of image
-    // If between 0 and 1, multiply by original width and height (to get smaller size)
-    // If greater than one, use in place of original pixel dimensions
+    // If between 0 and 1, multiply by original width and height (acts as a percentage)
+    // If greater than one, use as a forced width/height for all of the images
     largeFeatureWidth :   0,
     largeFeatureHeight:		0,
     smallFeatureWidth:    .5,
     smallFeatureHeight:		.5,
     // how much to pad the top of the carousel
     topPadding:           20,
-    // spacing between the sides of the container (pixels)
-    sidePadding:          30,
+    // spacing between the sides of the container
+    sidePadding:          50,
     // the additional offset to pad the side features from the top of the carousel
     smallFeatureOffset:		50,
     // indicates which feature to start the carousel at
@@ -647,16 +643,20 @@
     // time in milliseconds to set interval to autorotate the carousel
     // set to zero to disable it, negative to go left
     autoPlay:             0,
-    // set to true to enable the creation of blips to indicate how many
-    // features there are
-    counterStyle:         1,
+    // accepts 'blips' to generate and display numbered blips indicating what feature is centered
+    // or set to 'caption' to prepend the feature number to the caption (requires a 'p' element in the caption)
+    counterStyle:         'blips',
     // true to preload all images in the carousel before displaying anything
     preload:              true,
     // Will only display this many features in the carousel
     // set to zero to disable
     displayCutoff:        0,
     // an easing can be specified for the animation of the carousel
-    animationEasing:      'swing'
+    animationEasing:      'swing',
+    // selector for the left arrow of the carousel
+    leftButtonTag:        '#carousel-left',
+    // selector for the right arrow of the carousel
+    rightButtonTag:       '#carousel-right'
   };
 
 })(jQuery);
