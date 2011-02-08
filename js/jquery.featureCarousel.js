@@ -358,6 +358,11 @@
           newPosition = getPreviousNum(oldPosition);
         else
           newPosition = getNextNum(oldPosition);
+          
+        // callback for moving out of center pos
+        if (oldPosition == 1) {
+          options.leavingCenter($feature);
+        }
 
         // Caculate new new css values depending on where the feature will be located
         if (newPosition == 1) {
@@ -386,9 +391,8 @@
             new_fade = 0;
           }
         }
-        // This code block takes care of hiding the feature information if the feature is
-        // NO LONGER going to be in the center
-        if (newPosition != 1) {
+        // This code block takes care of hiding the feature information if the feature is leaving the center
+        if (oldPosition == 1) {
           // Slide up the story information
           $feature.find(".carousel-caption")
             .hide();
@@ -411,10 +415,12 @@
               if (newPosition == 1) {
                 // need to set the height to auto to accomodate caption if displayed below image
                 if (options.captionBelow)
-                  $(this).css('height','auto');
+                  $feature.css('height','auto');
                 // fade in the feature information
                 $feature.find(".carousel-caption")
                   .fadeTo("fast",0.85);
+                // callback for moved to center
+                options.movedToCenter($feature);
               }
               // decrement the animation queue
               pluginData.rotationsRemaining = pluginData.rotationsRemaining - 1;
@@ -453,7 +459,7 @@
             }
           )
           // select the image within the feature
-          .find("img:first")
+          .find('.carousel-image')
             // animate its size down
             .animate({
               width: new_width,
@@ -595,7 +601,6 @@
           if (position != undefined) {
             // if any of the links on a feature OTHER THAN the center feature were clicked,
             // initiate a carousel move but then throw the link action away
-            // if the position WAS the center (i.e. 1), then do nothing and let the link pass
             if (position != 1) {
               if (position == pluginData.totalFeatureCount) {
                 initiateMove(false,1);
@@ -604,6 +609,9 @@
               }
               event.preventDefault();
               return false;
+            // if the position WAS the center (i.e. 1), fire callback
+            } else {
+              options.clickedCenter($(this));
             }
           }
         });
@@ -670,7 +678,13 @@
     // selector for the right arrow of the carousel
     rightButtonTag:       '#carousel-right',
     // display captions below the image instead of on top
-    captionBelow:         false
+    captionBelow:         false,
+    // callback function for when a feature has animated to the center
+    movedToCenter:        $.noop,
+    // callback function for when feature left center
+    leavingCenter:        $.noop,
+    // callback function for when center feature was clicked
+    clickedCenter:        $.noop
   };
 
 })(jQuery);
