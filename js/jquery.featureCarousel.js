@@ -195,6 +195,11 @@
           .find(".carousel-image").css({
             'width': pluginData.smallFeatureWidth
           });
+          
+        // set position to relative of captions if displaying below image
+        if (options.captionBelow) {
+          pluginData.featuresContainer.find('.carousel-caption').css('position','relative');
+        }
 
         // figure out number of items that will rotate each time
         if (pluginData.totalFeatureCount < 4) {
@@ -404,6 +409,9 @@
             function () {
               // Take feature info out of hiding if new position is center
               if (newPosition == 1) {
+                // need to set the height to auto to accomodate caption if displayed below image
+                if (options.captionBelow)
+                  $(this).css('height','auto');
                 // fade in the feature information
                 $feature.find(".carousel-caption")
                   .fadeTo("fast",0.85);
@@ -660,7 +668,9 @@
     // selector for the left arrow of the carousel
     leftButtonTag:        '#carousel-left',
     // selector for the right arrow of the carousel
-    rightButtonTag:       '#carousel-right'
+    rightButtonTag:       '#carousel-right',
+    // display captions below the image instead of on top
+    captionBelow:         false
   };
 
 })(jQuery);

@@ -16,6 +16,7 @@
 }
 #carousel .carousel-image {
   border:0;
+  display:block;
 }
 #carousel .carousel-feature {
   position:absolute;
@@ -26,10 +27,9 @@
 }
 #carousel .carousel-feature .carousel-caption {
   position:absolute;
-  bottom:0px;
-  left:0px;
-  background-color:black;
+  bottom:0;
   width:100%;
+  background-color:#000;
 }
 #carousel .carousel-feature .carousel-caption p {
   margin:0;
