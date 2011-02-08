@@ -6,6 +6,7 @@ Version 1.1 - February 2011
 - changed out images to be JPEGs instead of PNGs
 - added more options, and changed existing options
 - allow ability to display caption below images istead of on top
+- three callback functions added
 
 =================================
 Version 1.0 - Februrary 2009
