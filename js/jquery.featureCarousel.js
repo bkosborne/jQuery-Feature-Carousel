@@ -1,5 +1,5 @@
 /*!
- * Feature Carousel, Version 1.1.1
+ * Feature Carousel, Version 1.1.2
  * http://www.bkosolutions.com
  *
  * Copyright 2011 Brian Osborne
