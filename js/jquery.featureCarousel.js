@@ -267,13 +267,13 @@
        */
       function setupBlips()
       {
-        // Only setup the blips if the counter style is 1 or 2
+        // Only setup the blips if the counter style is 'blips'
         if (options.counterStyle == 'blips') {
           // construct the blip list
           var $list = $("<ul></ul>");
           $list.addClass("blipsContainer");
           for (var i = 0; i < pluginData.totalFeatureCount; i++) {
-            // Counter style 1 has no numbers, while 2 does
+            // item position one plus the index
             var counter = i+1;
 
             // Build the DOM for the blip list
