@@ -43,7 +43,7 @@
       	setupFeatureDimensions();
         setupCarousel();
         setupFeaturePositions();
-        setupBlips();
+        setupTrackers();
         initiateMove(true,1);
       });
 
@@ -262,27 +262,25 @@
       }
 
       /**
-       * The blips are built using this function. The position and look
-       * of the blips are completely determined by the CSS file
+       * This function will set up the two different types of trackers used
        */
-      function setupBlips()
+      function setupTrackers()
       {
-        // Only setup the blips if the counter style is 'blips'
-        if (options.counterStyle == 'blips') {
-          // construct the blip list
+        if (options.trackerIndividual) {
+          // construct the tracker list
           var $list = $("<ul></ul>");
-          $list.addClass("blipsContainer");
+          $list.addClass("tracker-individual-container");
           for (var i = 0; i < pluginData.totalFeatureCount; i++) {
             // item position one plus the index
             var counter = i+1;
 
-            // Build the DOM for the blip list
-            var $blip = $("<div>"+counter+"</div>");
-            $blip.addClass("blip");
-            $blip.css("cursor","pointer");
-            $blip.attr("id","blip_"+(i+1));
+            // Build the DOM for the tracker list
+            var $trackerBlip = $("<div>"+counter+"</div>");
+            $trackerBlip.addClass("tracker-individual-blip");
+            $trackerBlip.css("cursor","pointer");
+            $trackerBlip.attr("id","tracker-"+(i+1));
             var $listEntry = $("<li></li>");
-            $listEntry.append($blip);
+            $listEntry.append($trackerBlip);
             $listEntry.css("float","left");
             $listEntry.css("list-style-type","none");
             $list.append($listEntry);
@@ -291,19 +289,39 @@
           $(pluginData.containerIDTag).append($list);
           $list.hide().show();
         }
+        
+        if (options.trackerSummation) {
+          // Build the tracker div that will hold the tracking data
+          var $tracker = $('<div></div>');
+          $tracker.addClass('tracker-summation-container');
+          // Collect info in spans
+          var $current = $('<span></span>').addClass('tracker-summation-current').text(options.startingFeature);
+          var $total = $('<span></span>').addClass('tracker-summation-total').text(pluginData.totalFeatureCount);
+          var $middle = $('<span></span>').addClass('tracker-summation-middle').text(' of ');
+          // Add it all together
+          $tracker.append($current).append($middle).append($total);
+          // Insert into DOM
+          $(pluginData.containerIDTag).append($tracker);
+        }
       }
 
-      // Move the highlighted blip to the currently centered feature
-      function changeBlip(oldCenter, newCenter)
-      {
-        // get selectors for the two blips
-        var $blipsContainer = pluginData.featuresContainer.find(".blipsContainer");
-        var $oldCenter = $blipsContainer.find("#blip_"+oldCenter);
-        var $newCenter = $blipsContainer.find("#blip_"+newCenter);
+      // Update the tracker information with the new centered feature
+      function updateTracker(oldCenter, newCenter) {
+        if (options.trackerIndividual) {
+          // get selectors for the two trackers
+          var $trackerContainer = pluginData.featuresContainer.find(".tracker-individual-container");
+          var $oldCenter = $trackerContainer.find("#tracker-"+oldCenter);
+          var $newCenter = $trackerContainer.find("#tracker-"+newCenter);
 
-        // change classes
-        $oldCenter.removeClass("blipSelected");
-        $newCenter.addClass("blipSelected");
+          // change classes
+          $oldCenter.removeClass("tracker-individual-blip-selected");
+          $newCenter.addClass("tracker-individual-blip-selected");
+        }
+        
+        if (options.trackerSummation) {
+          var $trackerContainer = pluginData.featuresContainer.find('.tracker-summation-container');
+          $trackerContainer.find('.tracker-summation-current').text(newCenter);
+        }
       }
 
       /**
@@ -426,8 +444,9 @@
               pluginData.rotationsRemaining = pluginData.rotationsRemaining - 1;
               // have to change the z-index after the animation is done
               $feature.css("z-index", new_zindex);
-              // change blips if using them
-              if (options.counterStyle == 'blips') {
+              // change trackers if using them
+              if (options.trackerIndividual || options.trackerSummation) {
+                // just update the tracker once; once the new center feature has arrived in center
                 if (newPosition == 1) {
                   // figure out what item was just in the center, and what item is now in the center
                   var newCenterItemNum = pluginData.featuresContainer.find(".carousel-feature").index($feature) + 1;
@@ -436,8 +455,8 @@
                     oldCenterItemNum = getNextNum(newCenterItemNum);
                   else
                     oldCenterItemNum = getPreviousNum(newCenterItemNum);
-                  // now change the active blip
-                  changeBlip(oldCenterItemNum, newCenterItemNum);
+                  // now update the trackers
+                  updateTracker(oldCenterItemNum, newCenterItemNum);
                 }
               }
 
@@ -617,14 +636,15 @@
         });
       });
 
-      $(".blip").live("click",function () {
+      // Did someone click one of the individual trackers?
+      $(".tracker-individual-blip").live("click",function () {
         // grab the position # that was clicked
         var goTo = $(this).attr("id").substring(5);
         // find out where that feature # actually is in the carousel right now
         var whereIsIt = pluginData.featuresContainer.find(".carousel-feature").eq(goTo-1).data('position');
         // which feature # is currently in the center
         var currentlyAt = pluginData.currentCenterNum;
-        // if the blip was clicked for the current center feature, do nothing
+        // if the tracker was clicked for the current center feature, do nothing
         if (goTo != currentlyAt) {
           // find the shortest distance to move the carousel
           var shortest = findShortestDistance(1, whereIsIt);
@@ -661,10 +681,13 @@
     // time in milliseconds to set interval to autorotate the carousel
     // set to zero to disable it, negative to go left
     autoPlay:             4000,
-    // accepts 'blips' to generate and display numbered blips indicating what feature is centered
-    // or set to 'caption' to prepend the feature number to the caption (requires a 'p' element in the caption)
-    // set to anything else for neither
-    counterStyle:         'blips',
+    // numbered blips can appear and be used to track the currently centered feature, as well as 
+    // allow the user to click a number to move to that feature. Set to false to not process these at all
+    // and true to process and display them
+    trackerIndividual:    true,
+    // a summation of the features can also be used to display an "x Of y" style of tracking
+    // this can be combined with the above option as well
+    trackerSummation:     true,
     // true to preload all images in the carousel before displaying anything. If this is set to false,
     // you will probably need to set a fixed width/height to prevent strangeness
     preload:              true,

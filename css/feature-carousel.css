@@ -38,7 +38,16 @@
   font-size:12px;
   color:white;
 }
-#carousel .blipsContainer {
+#carousel .tracker-summation-container {
+  position:absolute;
+  color:white;
+  right:48px;
+  top:230px;
+  padding:3px;
+  margin:3px;
+  background-color:#000;
+}
+#carousel .tracker-individual-container {
   position:absolute;
   color:white;
   right:48px;
@@ -46,20 +55,20 @@
   padding:0;
   margin:0;
 }
-#carousel .blipsContainer li {
+#carousel .tracker-individual-container li {
   list-style:none;
 }
-#carousel .blipsContainer .blip {
+#carousel .tracker-individual-container .tracker-individual-blip {
   margin:0 3px;
   padding:0 3px;
   color:white;
   text-align:center;
   background-color:#DDD;
 }
-#carousel .blipsContainer .blipSelected {
+#carousel .tracker-individual-container .tracker-individual-blip-selected {
   color:white;
   font-weight:bold;
-  background-color:black;
+  background-color:#000;
 }
 #carousel-left {
   position:absolute;
