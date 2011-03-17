@@ -72,7 +72,8 @@
             // The images may already be cached in the browser, in which case they
             // would have a 'true' complete value and the load callback would never be
             // fired. This will fire it manually.
-            if (this.complete) {
+
+            if (this.complete || $.browser.msie) {
               $(this).trigger('load');
             }
           });
