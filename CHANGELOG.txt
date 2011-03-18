@@ -1,4 +1,12 @@
 =================================
+Version 1.2 - March 2011
+=================================
+- Added (pretty hackish) support for IE9
+- Overhauled the 'blip' system. Summation & numeric counters now supported
+- Added the ability to pause/stop the autorotation on interaction
+- New options added to support new feature count system & pause effects
+
+=================================
 Version 1.1 - February 2011
 =================================
 - changed css & js to rely on ID tags instead of elements

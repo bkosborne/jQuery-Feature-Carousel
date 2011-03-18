@@ -328,21 +328,17 @@
       /**
        * This function will set the autoplay for the carousel to
        * automatically rotate it given the time in the options
+       * pass in TRUE to just clear the timer
        */
-      function autoPlay() {
+      function setTimer(stop) {
         // clear the timeout var if it exists
-        if (pluginData.timeoutVar != null) {
-          pluginData.timeoutVar = clearTimeout(pluginData.timeoutVar);
-        }
+        clearTimeout(pluginData.timeoutVar);
 
         // set interval for moving if autoplay is set
-        if (options.autoPlay != 0) {
+        if (!stop && options.autoPlay != 0) {
           var autoTime = (Math.abs(options.autoPlay) < options.carouselSpeed) ? options.carouselSpeed : Math.abs(options.autoPlay);
           pluginData.timeoutVar = setTimeout(function () {
-            if (options.autoPlay > 0)
-              initiateMove(true,1);
-            else if (options.autoPlay < 0)
-              initiateMove(false,1);
+            (options.autoPlay > 0) ? initiateMove(true,1) : initiateMove(false,1);
           }, autoTime);
         }
       }
@@ -474,8 +470,8 @@
                   move(direction);
               }
               
-              // reset timer and autoplay again
-              autoPlay();
+              // reset timer and auto rotate again
+              setTimer(false);
             }
           )
           // select the image within the feature
@@ -598,6 +594,10 @@
               $(this).css("opacity",0.8);
             }
           }
+          // pause the rotation?
+          if (options.pauseOnHover) setTimer(true);
+          // stop the rotation?
+          if (options.stopOnHover) options.autoPlay = 0;
         })
         .mouseout(function () {
           if (pluginData.currentlyMoving == false) {
@@ -605,6 +605,10 @@
             if (position == 2 || position == pluginData.totalFeatureCount) {
               $(this).css("opacity",0.4);
             }
+          }
+          // resume the rotation
+          if (options.pauseOnHover) {
+            setTimer(false);
           }
         });
 
@@ -640,7 +644,7 @@
       // Did someone click one of the individual trackers?
       $(".tracker-individual-blip").live("click",function () {
         // grab the position # that was clicked
-        var goTo = $(this).attr("id").substring(5);
+        var goTo = $(this).attr("id").substring(8);
         // find out where that feature # actually is in the carousel right now
         var whereIsIt = pluginData.featuresContainer.find(".carousel-feature").eq(goTo-1).data('position');
         // which feature # is currently in the center
@@ -682,6 +686,12 @@
     // time in milliseconds to set interval to autorotate the carousel
     // set to zero to disable it, negative to go left
     autoPlay:             4000,
+    // with autoplay enabled, set this option to true to have the carousel pause rotating
+    // when a user hovers over any feature
+    pauseOnHover:         true,
+    // with autoplay enabled, set this option to completely stop the autorotate functionality
+    // when a user hovers over any feature
+    stopOnHover:          false,
     // numbered blips can appear and be used to track the currently centered feature, as well as 
     // allow the user to click a number to move to that feature. Set to false to not process these at all
     // and true to process and display them
