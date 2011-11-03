@@ -1,4 +1,11 @@
 =================================
+Version 1.3 - November 2011
+=================================
+- Changed structure to support public functions
+- Added four public functions to control carousel
+- Bug fixes
+
+=================================
 Version 1.2 - March 2011
 =================================
 - Added (pretty hackish) support for IE9
