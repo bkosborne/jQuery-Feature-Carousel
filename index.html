@@ -9,18 +9,33 @@
     <script src="js/jquery.featureCarousel.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
       $(document).ready(function() {
-        $("#carousel").featureCarousel({
+        var carousel = $("#carousel").featureCarousel({
           // include options like this:
           // (use quotes only for string values, and no trailing comma after last option)
           // option: value,
           // option: value
+        });
+
+        $("#but_prev").click(function () {
+          carousel.prev();
+        });
+        $("#but_pause").click(function () {
+          carousel.pause();
+        });
+        $("#but_start").click(function () {
+          carousel.start();
+        });
+        $("#but_next").click(function () {
+          carousel.next();
         });
       });
     </script>
   </head>
   <body>
   
-    <div id="carousel-container">
+    <a id="but_prev" href="#">PREV</a> | <a id="but_pause" href="#">PAUSE</a> | <a id="but_start" href="#">START</a> | <a id="but_next" href="#">NEXT</a> 
+  
+    <div class="carousel-container">
     
       <div id="carousel">
         <div class="carousel-feature">
