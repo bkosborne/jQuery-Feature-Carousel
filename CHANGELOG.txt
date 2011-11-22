@@ -4,6 +4,7 @@ Version 1.3 - November 2011
 - Changed structure to support public functions
 - Added four public functions to control carousel
 - Bug fixes
+- Fixed image preloader to work in IE versions
 
 =================================
 Version 1.2 - March 2011

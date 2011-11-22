@@ -57,9 +57,10 @@
         var loadedImages = 0;
         var totalImages = $imageElements.length;
 
-        $imageElements.each(function () {
-          // Attempt to load the images
-          $(this).load(function () {
+        $imageElements.each(function (index, element) {
+          // Attempt to load the images					
+					var img = new Image();
+          $(img).bind('load error', function () {
             // Add to number of images loaded and see if they are all done yet
             loadedImages++;
             if (loadedImages == totalImages) {
@@ -67,13 +68,8 @@
               callback();
             }
           });
-          // The images may already be cached in the browser, in which case they
-          // would have a 'true' complete value and the load callback would never be
-          // fired. This will fire it manually.
-
-          if (this.complete || $.browser.msie) {
-            $(this).trigger('load');
-          }
+					
+					img.src = element.src;
         });
       } else {
         // if user doesn't want preloader, then just go right to callback
