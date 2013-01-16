@@ -516,6 +516,9 @@
         $newRight.css("z-index", 3);
       }
       $newCenter.css("z-index", 4);
+      
+      // Fire moving to center event
+      options.movingToCenter($newCenter);
 
       // Animate the features into their new positions
       animateFeature($newLeft, direction);
@@ -744,7 +747,9 @@
     // callback function for when feature left center
     leavingCenter:        $.noop,
     // callback function for when center feature was clicked
-    clickedCenter:        $.noop
+    clickedCenter:        $.noop,
+    // callback function for when a feature has start moving to center
+    movingToCenter:       $.noop
   };
   
 })(jQuery);
