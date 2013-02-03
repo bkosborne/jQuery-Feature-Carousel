@@ -562,12 +562,12 @@
     }
 
     // Move to the left if left button clicked
-    $(options.leftButtonTag).live('click',function () {
+    $(options.leftButtonTag).on('click',function () {
       initiateMove(false,1);
     });
 
     // Move to right if right button clicked
-    $(options.rightButtonTag).live('click',function () {
+    $(options.rightButtonTag).on('click',function () {
       initiateMove(true,1);
     });
 
@@ -608,7 +608,7 @@
 
     // Add event listener to all clicks within the features container
     // This is done to disable any links that aren't within the center feature
-    $("a", pluginData.containerIDTag).live("click", function (event) {
+    $("a", pluginData.containerIDTag).on("click", function (event) {
       // travel up to the container
       var $parents = $(this).parentsUntil(pluginData.containerIDTag);
       // now check each of the feature divs within it
@@ -636,7 +636,7 @@
     });
 
     // Did someone click one of the individual trackers?
-    $(".tracker-individual-blip",  pluginData.containerIDTag).live("click",function () {
+    $(".tracker-individual-blip",  pluginData.containerIDTag).on("click",function () {
       // grab the position # that was clicked
       var goTo = $(this).attr("id").substring(8);
       // find out where that feature # actually is in the carousel right now
