@@ -23,7 +23,7 @@
     // override the default options with user defined options
     options = $.extend({}, $.fn.featureCarousel.defaults, options || {});
 
-    /* These are univeral values that are used throughout the plugin. Do not modify them
+    /* These are universal values that are used throughout the plugin. Do not modify them
      * unless you know what you're doing. Most of them feed off the options
      * so most customization can be achieved by modifying the options values */
     var pluginData = {
